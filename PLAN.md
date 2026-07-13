@@ -16,18 +16,20 @@ waiting for the whole turn. `runAgent` in `src/agent.ts` uses
 stdout, and reads the assembled turn from `await stream.finalMessage()` so the
 tool-calling logic is unchanged.
 
-### Real tools
-Replace the canned `get_weather` and `dictionary` with tools that do real work:
-`read_file`, `write_file`, `list_dir`, `run_command`, `fetch_url`, a real weather
-API, a web search. An agent is only worth as much as the things it can actually
-do. Each one goes in `src/tools.ts` as a definition, a function, and a dispatcher
-case. Once you have a few, move them into `src/tools/`.
+### Real tools (done)
+Added `read_file`, `list_dir`, `write_file`, and `run_command` in `src/tools.ts`,
+alongside the original demo tools. File paths are scoped to the project
+directory (anything resolving outside it is rejected), and `run_command` runs
+through the confirmation gate. Still worth adding later: `fetch_url`, a real
+weather API, a web search. Once there are a few more, move them into
+`src/tools/`.
 
-### Tool confirmation
-Before running a tool that changes something (writes a file, runs a command), ask
-the user to approve it, the way Claude Code does. Without this, a `run_command`
-tool is a loaded gun. Add a `dangerous: true` flag per tool in `src/tools.ts` and
-a confirmation prompt in `src/agent.ts`.
+### Tool confirmation (done)
+Tools that change something on disk are listed in `DANGEROUS_TOOLS` in
+`src/tools.ts`. Before running one, `runAgent` asks the front-end through a
+`confirmTool` handler and skips the tool if the answer is no. The CLI shows a
+`y/N` prompt; the GUI turns its input bar into a `[y] yes [n] no` prompt, passing
+the decision back over the JSON bridge.
 
 ## Tier 2: smarter memory and context
 
@@ -41,10 +43,12 @@ Long chats eventually run past the model's context limit. The API returns a
 `usage` field on every response, so track it, and once `messages` gets big,
 summarize the oldest turns into a single note and drop them. In `src/agent.ts`.
 
-### Save and resume conversations
-Write the `messages` array to disk so you can pick a chat back up later. Add
-`/save <name>`, `/load <name>`, and `/sessions`. The commands go in
-`src/commands.ts`, and the read/write logic in a small `src/sessions.ts`.
+### Save and resume conversations (done)
+`src/sessions.ts` writes the `messages` array to `sessions/<name>.json` and reads
+it back, replacing the live array in place so the agent resumes with full
+context. Driven by `/save <name>`, `/load <name>`, and `/sessions` in
+`src/commands.ts`. `/load` also re-renders the restored transcript so you can see
+what came back.
 
 ## Tier 3: polish
 
@@ -73,8 +77,8 @@ save, command parsing. Use something like vitest, with files named `src/*.test.t
 - Prompt caching: cache the system prompt and tool definitions to cut cost and latency.
 
 ## A reasonable order for class
-1. Streaming, for the quick payoff.
-2. `read_file` and `write_file`, your first real tools.
-3. Tool confirmation, so those file tools are safe to use.
-4. Save and resume conversations.
-5. Pick a stretch goal and make it your own.
+1. ~~Streaming, for the quick payoff.~~ done
+2. ~~`read_file` and `write_file`, your first real tools.~~ done
+3. ~~Tool confirmation, so those file tools are safe to use.~~ done
+4. ~~Save and resume conversations.~~ done
+5. Pick a stretch goal and make it your own. ← next
