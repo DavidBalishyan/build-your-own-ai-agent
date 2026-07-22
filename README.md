@@ -3,6 +3,8 @@
 My notes from the TUMO **Build Your Own AI Agent** workshop.
 The workshop material lives in [rhovagimian/tumo-ai-agents](https://github.com/rhovagimian/tumo-ai-agents).
 
+*My finished project: [DavidBalishyan/tumo-agent](https://github.com/DavidBalishyan/tumo-agent)*
+
 ## Week 1: the building blocks
 
 | # | Session | Notes |
