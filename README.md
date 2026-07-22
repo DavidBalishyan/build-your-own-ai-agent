@@ -1,4 +1,4 @@
-# Session Notes
+# Build your own AI agent
 
 My notes from the TUMO **Build Your Own AI Agent** workshop.
 The workshop material lives in [rhovagimian/tumo-ai-agents](https://github.com/rhovagimian/tumo-ai-agents).
@@ -27,3 +27,5 @@ Every agent is four ingredients:
 Claude has no memory and no hands. My program supplies both. The `messages` array
 is the memory, and my code is what actually runs the tools. Claude is only the brain
 that decides what to do next.
+
+<!--Finished the workshop-->

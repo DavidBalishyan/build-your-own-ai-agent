@@ -82,3 +82,5 @@ save, command parsing. Use something like vitest, with files named `src/*.test.t
 3. ~~Tool confirmation, so those file tools are safe to use.~~ done
 4. ~~Save and resume conversations.~~ done
 5. Pick a stretch goal and make it your own. ← next
+
+<!--ALL Done-->
